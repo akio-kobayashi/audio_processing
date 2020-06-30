@@ -55,7 +55,7 @@ def main():
                     continue
                 counts[label] += 1
 
-                path=os.path.join('./audio',data[key]['filename'])
+                path=os.path.join('./ESC-50-master/audio',data[key]['filename'])
                 wav,sr=librosa.load(path)
                 mels=compute_melspec(wav)
                 if counts[label] > 30:
