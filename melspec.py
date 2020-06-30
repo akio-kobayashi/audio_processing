@@ -32,6 +32,7 @@ def main():
             keys.append(row['filename'])
             data[row['filename']] = row
 
+    counts={}
     for n in range(5):
         counts[n]=0
 
