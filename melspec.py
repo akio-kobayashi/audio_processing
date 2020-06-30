@@ -61,11 +61,11 @@ def main():
                 if counts[label] > 30:
                     valid.create_group(key)
                     valid.create_dataset(key+'/feature', data=mels)
-                    valid.create_dataset(key+'/label', data=mels)
+                    valid.create_dataset(key+'/label', data=label)
                 else:
                     train.create_group(key)
                     train.create_dataset(key+'/feature', data=mels)
-                    train.create_dataset[key+'/label', data=label]
+                    train.create_dataset(key+'/label', data=label)
 
 
 if __name__ == "__main__":
