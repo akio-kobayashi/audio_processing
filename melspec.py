@@ -23,9 +23,6 @@ def main():
     parser.add_argument('--valid', type=str, required=True)
     args = parser.parse_args()
 
-    with open(args.list) as fp:
-        dirlist=fp.readlines()
-
     data={}
     keys=[]
     with open(args.csv) as fp:
