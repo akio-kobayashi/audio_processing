@@ -29,8 +29,8 @@ def main():
         csv_file = open(args.csv, "r")
         df = csv.DictReader(csv_file)
         for row in df:
-            keys.append(row['key'])
-            data[row['key']] = row
+            keys.append(row['filename'])
+            data[row['filename']] = row
 
     for n in range(5):
         counts[n]=0
