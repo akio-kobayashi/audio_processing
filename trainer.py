@@ -4,6 +4,7 @@ import os
 import sys
 import subprocess
 import time
+import shutil
 import numpy as np
 from cnn import CNN4
 from generator import DataGenerator
@@ -16,13 +17,17 @@ from sklearn.metrics import accuracy_score
 
 ASC_CLASS=5
 
-def main():
+def trainer():
 
     input_dim=40
     input_length=500
     batch_size=10
     epochs=10
     learn_rate=1.0e-3
+
+    # 学習と評価用のデータ
+    train_data='train.h5'
+    test_data='test.h5'
 
     # 学習に使うアルゴリズムの選択
     optimizer=keras.optimizers.Adam()
@@ -34,14 +39,13 @@ def main():
     # ニューラルネットワーク
     output=CNN4()(input)
 
-
     # モデルの定義
     model=Model(input, output)
     # 学習可能な計算グラフを作成
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
     # データの準備
-    training_generator = DataGenerator(args.data, dim=(input_dim, input_length),
+    training_generator = DataGenerator(train_data, dim=(input_dim, input_length),
                                           batch_size=batch_size)
     # 入力データが正規分布にしたがうよう，偏りをなくす
     training_generator.compute_norm()
@@ -49,11 +53,17 @@ def main():
 
     # 128個を1つのバッチとしたデータを作成（評価用）
     validation_generator.set_norm(mean, var)
-    validation_generator = DataGenerator(args.data, dim=(input_dim, input_length),
+    validation_generator = DataGenerator(test_data, dim=(input_dim, input_length),
                                             batch_size=batch_size)
 
     # 学習状況のログを保存する
-    tensorboard = TensorBoard(log_dir='./')
+    try:
+        shutil.rmtree('./logs')
+    except:
+        pass
+    os.makedirs('./logs')
+    # Tensorboardに記録する
+    tensorboard = TensorBoard(log_dir='./logs')
 
     # 学習
     model.fit_generator(generator=training_generator,
@@ -81,8 +91,9 @@ def main():
         acc=np.add(y_pred == y_true)
     acc = np.mean(acc)
     print("正解率: %.4f %" % acc)
-    print("クラスごとの予測")
-    print(convf_mat)
-
+    #print("クラスごとの予測")
+    #print(convf_mat)
+    return acc, conv_mat
+    
 if __name__ == "__main__":
   main()
