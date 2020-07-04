@@ -24,7 +24,7 @@ class DataGenerator(Sequence):
         self.mean=0.0
         self.var=0.0
         self.keys=[]
-        self.true_labels={"cat":0, "cow":1, "dog":2, "pig":3, "frog":4}
+        self.true_labels={"cat":0, "cow":1, "dog":2, "frog":3, "pig":4}
 
         self.h5fd = h5py.File(self.file, 'r')
         self.n_samples = len(self.h5fd.keys())
