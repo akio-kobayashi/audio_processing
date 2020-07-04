@@ -94,6 +94,3 @@ def trainer():
     #print("クラスごとの予測")
     #print(convf_mat)
     return acc, conv_mat
-    
-if __name__ == "__main__":
-  main()
