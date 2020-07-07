@@ -5,13 +5,13 @@ import sys, os, re, gzip, struct
 import random
 import h5py
 import copy
-from tf.keras.utils import Sequence
-import tf.keras.utils
+#from tf.keras.utils import Sequence
+#import tf.keras.utils
 import tensorflow as tf
 
 ASC_CLASS=5
 
-class DataGenerator(Sequence):
+class DataGenerator(tf.keras.utils.Sequence):
 
     def __init__(self, file, batch_size=64, dim=(40,500), n_channels=1, shuffle=True):
 
@@ -71,7 +71,7 @@ class DataGenerator(Sequence):
             x[i,:,0:src.shape[2],:] = src
             y[i] = label
 
-        return x, keras.utils.to_categorical(y, num_classes=self.n_classes)
+        return x, tf.keras.utils.to_categorical(y, num_classes=self.n_classes)
 
     def compute_norm(self):
         mean=None

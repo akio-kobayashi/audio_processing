@@ -8,9 +8,9 @@ import shutil
 import numpy as np
 from cnn import CNN4
 from generator import DataGenerator
-from tf.keras.callbacks import TensorBoard
-from tf.keras.models import Model
-from tf.keras.layers import Input
+#from tf.keras.callbacks import TensorBoard
+#from tf.keras.models import Model
+#from tf.keras.layers import Input
 import tensorflow as tf
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
@@ -34,13 +34,13 @@ def trainer():
 
     # 入力ベクトルの形状(次元)を指定
     # ( 特徴量の次元，時間(長さ)の次元，フィルタ数の次元 ) = numpyのshape
-    input=Input( shape=(input_dim, input_length, 1) )
+    input=tf.keras.layers.Input( shape=(input_dim, input_length, 1) )
 
     # ニューラルネットワーク
     output=CNN4()(input)
 
     # モデルの定義
-    model=Model(input, output)
+    model=tf.keras.mdoels.Model(input, output)
     # 学習可能な計算グラフを作成
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
@@ -63,7 +63,7 @@ def trainer():
         pass
     os.makedirs('./logs')
     # Tensorboardに記録する
-    tensorboard = TensorBoard(log_dir='./logs')
+    tensorboard = tf.keras.callbacks.TensorBoard(log_dir='./logs')
 
     # 学習
     model.fit_generator(generator=training_generator,
