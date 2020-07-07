@@ -30,7 +30,7 @@ def trainer():
     test_data='test.h5'
 
     # 学習に使うアルゴリズムの選択
-    optimizer=keras.optimizers.Adam()
+    optimizer=tf.keras.optimizers.Adam()
 
     # 入力ベクトルの形状(次元)を指定
     # ( 特徴量の次元，時間(長さ)の次元，フィルタ数の次元 ) = numpyのshape
