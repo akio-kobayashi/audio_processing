@@ -25,7 +25,7 @@ class CNN4(object):
         for depth in range(self.max_depth):
             # 出力 = 層を表す関数（入力）と記述する
             # 1. 畳み込み
-            x=Conv2D(filters=self.filters*(depth+1)
+            x=Conv2D(filters=self.filters*(depth+1),
                     kernel_size=self.kernel_size, padding='same',
                     data_format='channels_last',
                     kernel_initializer='glorot_uniform')(x)
