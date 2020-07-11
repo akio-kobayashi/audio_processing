@@ -52,9 +52,9 @@ def train():
     mean, var=training_generator.get_norm()
 
     # 128個を1つのバッチとしたデータを作成（評価用）
-    validation_generator.set_norm(mean, var)
     validation_generator = DataGenerator(test_data, dim=(input_dim, input_length),
                                             batch_size=batch_size)
+    validation_generator.set_norm(mean, var)
 
     # 学習状況のログを保存する
     try:
