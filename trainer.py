@@ -83,7 +83,7 @@ def train():
 
         # 確率が最大となるインデックスを求める
         y_pred=np.argmax(pred, axis=1)
-        y_true=np.argmax(y_batch, axis=1)
+        y_true=np.argmax(y, axis=1)
 
         # 正解率の計算に使う行列を作る
         conf_mat=confusion_matrix(y_true, y_pred, labels=[0,1,2,3,4])
