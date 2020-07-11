@@ -78,7 +78,7 @@ class DataGenerator(tf.keras.utils.Sequence):
         sq_mean=None
         rows=0
         for key in self.keys:
-            mat=self.h5fd[key][()]
+            mat=self.h5fd[key+'/feature'][()]
             rows += mat.shape[1]
             if mean is None:
                 mean=np.sum(mat, axis=1).astype(np.float64)

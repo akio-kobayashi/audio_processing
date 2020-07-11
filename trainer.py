@@ -26,8 +26,8 @@ def train():
     learn_rate=1.0e-3
 
     # 学習と評価用のデータ
-    train_data='train.h5'
-    test_data='test.h5'
+    train_data='./train.h5'
+    test_data='./test.h5'
 
     # 学習に使うアルゴリズムの選択
     optimizer=tf.keras.optimizers.Adam()
