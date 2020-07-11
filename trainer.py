@@ -77,7 +77,7 @@ def train():
     num=0
     for bt in range(validation_generator.__len__()):
         # データを10個取り出す
-        x,y = valid_generator.__getitem__(bt)
+        x,y = validation_generator.__getitem__(bt)
         # 学習したモデルで予測する
         pred = model.predict_on_batch(x)
 
