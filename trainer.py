@@ -40,7 +40,7 @@ def train():
     output=CNN4()(input)
 
     # モデルの定義
-    model=tf.keras.mdoels.Model(input, output)
+    model=tf.keras.models.Model(input, output)
     # 学習可能な計算グラフを作成
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['categorical_accuracy'])
 
