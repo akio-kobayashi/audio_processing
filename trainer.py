@@ -17,7 +17,7 @@ from sklearn.metrics import accuracy_score
 
 ASC_CLASS=5
 
-def trainer():
+def train():
 
     input_dim=40
     input_length=500
@@ -52,7 +52,7 @@ def trainer():
     mean, var=training_generator.get_norm()
     print(mean.shape)
     return
-    
+
     # 128個を1つのバッチとしたデータを作成（評価用）
     validation_generator.set_norm(mean, var)
     validation_generator = DataGenerator(test_data, dim=(input_dim, input_length),
