@@ -10,14 +10,15 @@ ASC_CLASS=5
 '''
     4層 畳み込みニューラルネットワーク
 '''
-class CNN4(object):
+class CNNClassifier(object):
 
-    def __init__(self):
+    def __init__(self, filters=64, max_depth=4, kernel_size=3, pool_size=2, doubling=False):
         # モデルパラメータ
-        self.filters=64
-        self.max_depth=4
-        self.kernel_size=3
-        self.pool_size=2
+        self.filters=filters
+        self.max_depth=max_depth
+        self.kernel_size=kernel_size
+        self.pool_size=pool_size
+        self.doubling=doubling
 
     def __call__(self, x):
 
@@ -29,6 +30,11 @@ class CNN4(object):
                     kernel_size=self.kernel_size, padding='same',
                     data_format='channels_last',
                     kernel_initializer='glorot_uniform')(x)
+            if self.doubling is True:
+                x=tf.keras.layers.Conv2D(filters=self.filters*(depth+1),
+                        kernel_size=self.kernel_size, padding='same',
+                        data_format='channels_last',
+                        kernel_initializer='glorot_uniform')(x)
             # 2. 活性化関数 (Rectified Linear Unit)
             x=tf.keras.layers.Activation('relu')(x)
             # 3. 最大値プーリング

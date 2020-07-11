@@ -6,11 +6,8 @@ import subprocess
 import time
 import shutil
 import numpy as np
-from cnn import CNN4
+from cnn import CNNClassifier
 from generator import DataGenerator
-#from tf.keras.callbacks import TensorBoard
-#from tf.keras.models import Model
-#from tf.keras.layers import Input
 import tensorflow as tf
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
@@ -37,7 +34,7 @@ def train():
     input=tf.keras.layers.Input( shape=(input_dim, input_length, 1) )
 
     # ニューラルネットワーク
-    output=CNN4()(input)
+    output=CNNClassifier()(input)
 
     # モデルの定義
     model=tf.keras.models.Model(input, output)
@@ -87,7 +84,7 @@ def train():
 
         # 正解率の計算に使う行列を作る
         conf_mat=confusion_matrix(y_true, y_pred, labels=[0,1,2,3,4])
-        mat+=convf_mat
+        mat+=conf_mat
 
         acc+=np.sum(y_pred == y_true)
         num+=len(y_true)
