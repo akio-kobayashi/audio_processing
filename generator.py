@@ -44,7 +44,7 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         x, y = self.__data_generation(list_keys_temp)
 
-        return X, y
+        return x, y
 
     def on_epoch_end(self):
         if self.shuffle == True:
