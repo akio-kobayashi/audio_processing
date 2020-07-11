@@ -50,7 +50,8 @@ def trainer():
     # 入力データが正規分布にしたがうよう，偏りをなくす
     training_generator.compute_norm()
     mean, var=training_generator.get_norm()
-
+    print(mean.shape)
+    
     # 128個を1つのバッチとしたデータを作成（評価用）
     validation_generator.set_norm(mean, var)
     validation_generator = DataGenerator(test_data, dim=(input_dim, input_length),
