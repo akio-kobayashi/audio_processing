@@ -73,8 +73,9 @@ def train():
                         shuffle=True)
 
     mat=np.zeros((ASC_CLASS,ASC_CLASS), dtype=int)
-    acc=np.zeros((ASC_CLASS,ASC_CLASS), dtype=int)
-    for bt in range(valid_generator.__len__()):
+    acc=0
+    num=0
+    for bt in range(validation_generator.__len__()):
         # データを10個取り出す
         x,y = valid_generator.__getitem__(bt)
         # 学習したモデルで予測する
@@ -85,12 +86,10 @@ def train():
         y_true=np.argmax(y_batch, axis=1)
 
         # 正解率の計算に使う行列を作る
-        conf_mat=confusion_matrix(y_true, y_pred)
-        mat=np.add(conf_mat, mat)
+        conf_mat=confusion_matrix(y_true, y_pred, labels=[0,1,2,3,4])
+        mat+=convf_mat
 
-        acc=np.add(y_pred == y_true)
-    acc = np.mean(acc)
-    print("正解率: %.4f %" % acc)
-    #print("クラスごとの予測")
-    #print(convf_mat)
-    return acc, conv_mat
+        acc+=np.sum(y_pred == y_true)
+        num+=len(y_true)
+    acc = float(acc)/num
+    return acc,mat
