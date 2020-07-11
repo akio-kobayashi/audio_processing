@@ -14,17 +14,22 @@ from sklearn.metrics import accuracy_score
 
 ASC_CLASS=5
 
-def train():
+def train(hires=False, filters=64, max_depth=4, kernel_size=3, pool_size=2, doubling=False):
 
-    input_dim=40
-    input_length=500
+    input_length=552
     batch_size=10
     epochs=10
     learn_rate=1.0e-3
 
     # 学習と評価用のデータ
-    train_data='./train.h5'
-    test_data='./test.h5'
+    if hires is True:
+        input_dim=80
+        train_data='train_hires.h5'
+        test_data='test_hires.h5'
+    else:
+        input_dim=40
+        train_data='./train.h5'
+        test_data='./test.h5'
 
     # 学習に使うアルゴリズムの選択
     optimizer=tf.keras.optimizers.Adam()
