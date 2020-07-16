@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score
 
 ASC_CLASS=5
 
-def train(hires=False, filters=64, max_depth=4, kernel_size=3, pool_size=2, doubling=False):
+def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doubling=False, algorigim='adam'):
 
     input_length=552
     batch_size=10
@@ -23,16 +23,23 @@ def train(hires=False, filters=64, max_depth=4, kernel_size=3, pool_size=2, doub
 
     # 学習と評価用のデータ
     if hires is True:
-        input_dim=80
+        input_dim=80 # 80次元のデータ．こちらの方が詳細なデータ
         train_data='train_hires.h5'
         test_data='test_hires.h5'
     else:
-        input_dim=40
+        input_dim=40 # 40次元のデータ．デフォルト
         train_data='./train.h5'
         test_data='./test.h5'
 
     # 学習に使うアルゴリズムの選択
-    optimizer=tf.keras.optimizers.Adam()
+    if alogrithm == 'sgd':
+        optimizer=tf.keras.optimizers.SGD()
+    elif alogrithm == 'adadelta':
+        optimizer=tf.keras.optimizers.AdaDelta()
+    elif algorigim == 'rmsprop':
+        optimizer=tf.keras.optimizers.RMSprop()
+    else:
+        optimizer=tf.keras.optimizers.Adam()
 
     # 入力ベクトルの形状(次元)を指定
     # ( 特徴量の次元，時間(長さ)の次元，フィルタ数の次元 ) = numpyのshape
@@ -53,7 +60,7 @@ def train(hires=False, filters=64, max_depth=4, kernel_size=3, pool_size=2, doub
     training_generator.compute_norm()
     mean, var=training_generator.get_norm()
 
-    # 128個を1つのバッチとしたデータを作成（評価用）
+    # 10個のデータを1つのバッチとしたデータを作成（評価用）
     validation_generator = DataGenerator(test_data, dim=(input_dim, input_length),
                                             batch_size=batch_size)
     validation_generator.set_norm(mean, var)
