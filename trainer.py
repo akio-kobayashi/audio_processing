@@ -32,9 +32,9 @@ def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doub
         test_data='./test.h5'
 
     # 学習に使うアルゴリズムの選択
-    if alogrithm == 'sgd':
+    if algorithm == 'sgd':
         optimizer=tf.keras.optimizers.SGD()
-    elif alogrithm == 'adadelta':
+    elif algorithm == 'adadelta':
         optimizer=tf.keras.optimizers.AdaDelta()
     elif algorigim == 'rmsprop':
         optimizer=tf.keras.optimizers.RMSprop()
