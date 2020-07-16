@@ -81,9 +81,12 @@ def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doub
                         callbacks=[tensorboard],
                         shuffle=True)
 
+    # 学習したニューラルネットワークを使って評価を行う
+    # 混同行列の初期化
     mat=np.zeros((ASC_CLASS,ASC_CLASS), dtype=int)
+    # 正解数の初期化
     acc=0
-    num=0
+    # 評価データ総数
     for bt in range(validation_generator.__len__()):
         # データを10個取り出す
         x,y = validation_generator.__getitem__(bt)
@@ -94,11 +97,9 @@ def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doub
         y_pred=np.argmax(pred, axis=1)
         y_true=np.argmax(y, axis=1)
 
-        # 正解率の計算に使う行列を作る
-        conf_mat=confusion_matrix(y_true, y_pred, labels=[0,1,2,3,4])
-        mat+=conf_mat
+        # 混同行列を作る
+        mat+=confusion_matrix(y_true, y_pred, labels=[0,1,2,3,4])
 
         acc+=np.sum(y_pred == y_true)
-        num+=len(y_true)
-    acc = float(acc)/num
+    acc = float(acc)/validation_generator.__num_samples__()
     return acc,mat
