@@ -35,8 +35,8 @@ class DataGenerator(tf.keras.utils.Sequence):
             random.shuffle(self.keys)
 
     def __num_samples__(self):
-        return len(self.keys())
-        
+        return len(self.keys)
+
     def __len__(self):
         return int(np.ceil(self.n_samples)/self.batch_size)
 
