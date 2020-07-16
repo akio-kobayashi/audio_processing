@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score
 
 ASC_CLASS=5
 
-def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doubling=False, algorigim='adam'):
+def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doubling=False, algorithm='adam'):
 
     input_length=552
     batch_size=10
