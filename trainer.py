@@ -36,7 +36,7 @@ def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doub
         optimizer=tf.keras.optimizers.SGD()
     elif algorithm == 'adadelta':
         optimizer=tf.keras.optimizers.AdaDelta()
-    elif algorigim == 'rmsprop':
+    elif algorithm == 'rmsprop':
         optimizer=tf.keras.optimizers.RMSprop()
     else:
         optimizer=tf.keras.optimizers.Adam()
