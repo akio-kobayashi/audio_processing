@@ -11,8 +11,17 @@ import tensorflow as tf
 
 ASC_CLASS=5
 
+'''
+    DataGenerator
+    学習や評価で用いるデータの読み出しと加工（正規化）を行うクラス
+'''
 class DataGenerator(tf.keras.utils.Sequence):
 
+    '''
+        *** 初期化 ***
+        インスタンスが作成されるときによびだされる
+        パラメータを設定する
+    '''
     def __init__(self, file, batch_size=64, dim=(40,500), n_channels=1, shuffle=True):
 
         self.file=file
@@ -34,13 +43,22 @@ class DataGenerator(tf.keras.utils.Sequence):
         if self.shuffle:
             random.shuffle(self.keys)
 
+    '''
+        *** データの総数を返す ***
+    '''
     def __num_samples__(self):
         return len(self.keys)
 
+    '''
+        *** バッチ総数を返す ***
+    '''
     def __len__(self):
         return int(np.ceil(self.n_samples)/self.batch_size)
 
 
+    '''
+        *** データからバッチを取り出す ***
+    '''
     def __getitem__(self, index):
         list_keys_temp = [self.keys[k] for k in range(index*self.batch_size,
                                                       min( (index+1)*self.batch_size, len(self.keys) ) )]
@@ -49,10 +67,16 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         return x, y
 
+    '''
+        *** 1回の学習終了後に行う処理 ***
+    '''
     def on_epoch_end(self):
         if self.shuffle == True:
             random.shuffle(self.keys)
 
+    '''
+        *** データの読み出しと前処理を行う ***
+    '''
     def __data_generation(self, list_keys_temp):
         x = np.zeros((self.batch_size, *self.dim, self.n_channels))
         y = np.empty((self.batch_size), dtype=int)
@@ -76,6 +100,10 @@ class DataGenerator(tf.keras.utils.Sequence):
 
         return x, tf.keras.utils.to_categorical(y, num_classes=self.n_classes)
 
+    '''
+        *** データの平均と標準偏差を計算する ***
+        データの分布は正規分布であることを前提とする
+    '''
     def compute_norm(self):
         mean=None
         sq_mean=None
@@ -96,9 +124,16 @@ class DataGenerator(tf.keras.utils.Sequence):
         self.mean=mean.astype(np.float32)
         self.var=sq_mean.astype(np.float32)
 
+    '''
+        *** データの平均と標準偏差を返す ***
+    '''
     def get_norm(self):
         return self.mean, self.var
 
+    '''
+        *** データの平均と標準偏差を設定する ***
+        評価データの平均と分散は学習データの平均と分散に合わせておく
+    '''
     def set_norm(self, mean, var):
         self.mean = mean
         self.var = var

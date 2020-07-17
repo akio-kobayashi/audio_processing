@@ -1,17 +1,21 @@
 #!/usr/bin/python3
 
-#from tf.keras.models import Model
-#from tf.keras.layers import Dense,Conv2D,Activation,MaxPooling2D,GlobalAveragePooling2D
 import numpy as np
 import tensorflow as tf
 
 ASC_CLASS=5
 
 '''
-    4層 畳み込みニューラルネットワーク
+    CNNClasifier
+    畳み込みニューラルネットワーク
 '''
 class CNNClassifier(object):
 
+    '''
+        *** 初期化 ***
+        インスタンスが作成されるときによびだされる
+        パラメータを設定する
+    '''
     def __init__(self, filters=64, max_depth=4, kernel_size=3, pool_size=2, doubling=False):
         # モデルパラメータ
         self.filters=filters
@@ -20,9 +24,13 @@ class CNNClassifier(object):
         self.pool_size=pool_size
         self.doubling=doubling
 
+    '''
+        *** モデルの定義 ***
+        畳み込みの関数などを組み合わせてネットワークを定義する
+    '''
     def __call__(self, x):
 
-        # 4層分繰り返す
+        # max_depth 層分繰り返す
         for depth in range(self.max_depth):
             # 出力 = 層を表す関数（入力）と記述する
             # 1. 畳み込み
