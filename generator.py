@@ -5,8 +5,6 @@ import sys, os, re, gzip, struct
 import random
 import h5py
 import copy
-#from tf.keras.utils import Sequence
-#import tf.keras.utils
 import tensorflow as tf
 
 ASC_CLASS=5
