@@ -104,7 +104,7 @@ def train(hires=False, filters=16, max_depth=2, kernel_size=2, pool_size=2, doub
         *** 学習 ***
         tensorflowの以下の関数を呼び出して行う．
     '''
-    model.fit_generator(generator=training_generator,
+    model.fit_generator(training_generator,
                         validation_data=validation_generator,
                         epochs=epochs,
                         callbacks=[tensorboard],
